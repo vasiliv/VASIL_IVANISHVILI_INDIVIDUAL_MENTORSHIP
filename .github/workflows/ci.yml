@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+
+jobs:  
+  pr-size-label:
+    name: PR size cannot exceed 250 lines of code
+    runs-on: ubuntu-latest
+    steps:
+    - uses: codelytv/pr-size-labeler@v1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        xs_max_size: '10'
+        s_max_size: '50'
+        m_max_size: '150'
+        l_max_size: '${{ secrets.PR_SIZE }}'
+        fail_if_xl: 'true'
+        message_if_xl: >
+          'This PR exceeds the recommended size of ${{ secrets.PR_SIZE }} lines.
+          Please make sure you are NOT addressing multiple issues with one PR.’
+        github_api_url: 'api.github.com'
+    
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./src
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build -c Release --no-restore
+    
+    - name: Test
+      run: dotnet test -c Release --no-build --verbosity normal --filter "Category!=LongRunning"
