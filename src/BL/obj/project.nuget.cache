@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "ipsQOUIHKbpwCB4tA5UuegS7eI0aLRa+XwS8naxryV1TTFY3AtqAqlD/BElWYsP3AtJDwauioBDzig7PH4bH6w==",
+  "success": true,
+  "projectFilePath": "C:\\Projects\\VASIL_IVANISHVILI_INDIVIDUAL_MENTORSHIP\\src\\BL\\BL.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hp\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\hp\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
