@@ -15,7 +15,7 @@ namespace BL
         //private static string city = String.Empty;
         private static string url2 = "&appid=";
         private static string units = "&units=metric";
-        public static async Task<float> GetTemperature(string city)
+        public static async Task <float?> GetTemperature(string city)
         {
             string finalUrl = $"{url1}{city}{url2}{apiKey}{units}";
             using (var client = new HttpClient())
@@ -32,11 +32,11 @@ namespace BL
                 }
                 else
                 {
-                    return 0.0f;
+                    return null;
                 }
             }
         }
-        public static async Task<string> Instructions(float temperature)
+        public static async Task<string> Instructions(float? temperature)
         {
             string result = temperature switch
             {
