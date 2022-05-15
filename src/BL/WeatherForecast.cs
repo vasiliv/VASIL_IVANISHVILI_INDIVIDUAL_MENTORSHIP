@@ -38,15 +38,14 @@ namespace BL
         }
         public static async Task<string> Instructions(double? temperature)
         {
-            string result = temperature switch
+            return temperature switch
             {
                 < 0 => "Dress warmly",
                 >= 0 and < 20 => "It's fresh",
                 >= 20 and < 30 => "Good weather",
                 >= 30 => "It's time to go to the beach",
                 _ => "No such a temperature"
-            };
-            return result;
+            };            
         }
     }
 }
