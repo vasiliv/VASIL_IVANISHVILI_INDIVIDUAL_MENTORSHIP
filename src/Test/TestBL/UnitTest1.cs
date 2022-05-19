@@ -21,6 +21,17 @@ namespace TestBL
             //Assert
             Assert.Equal(temperature, -5.5);
         }
+        [Fact]
+        public async Task GetInstructions_WhenTemperatureIsCorrect_ReturnsTemperature()
+        {
+            //Arrange
+            WeatherForecast weatherForecast = new WeatherForecast(FakeHttpClient("{'main':{'temp':-5.5}}"));
+            string instruction = await weatherForecast.Instructions(-5.5);
+            //Act
+            string actual = "Dress warmly";
+            //Assert
+            Assert.Equal(instruction,actual);
+        }
         public static HttpClient FakeHttpClient(string response)
         {
             response ??= "{'main':{'temp':10.0}}";
