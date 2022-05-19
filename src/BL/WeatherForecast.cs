@@ -11,8 +11,7 @@ namespace BL
     public class WeatherForecast
     {
         private static string apiKey = "c1c4d772f711221a4a1df5be101bb4a5";
-        private static string url1 = "https://api.openweathermap.org/data/2.5/weather?q=";
-        //private static string city = String.Empty;
+        private static string url1 = "https://api.openweathermap.org/data/2.5/weather?q=";        
         private static string url2 = "&appid=";
         private static string units = "&units=metric";
         public static async Task <double?> GetTemperature(string city)
@@ -36,7 +35,7 @@ namespace BL
                 }
             }
         }
-        public static async Task<string> Instructions(double? temperature)
+        public static async Task<string> Instructions(float temperature)
         {
             return temperature switch
             {
