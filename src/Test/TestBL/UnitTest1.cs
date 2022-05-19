@@ -12,14 +12,14 @@ namespace TestBL
     public class UnitTest1
     {        
         [Fact]
-        public async Task TestInstructionsMethod()
+        public async Task GetTemperature_WhenCityIsCorrect_ReturnsTemperature()
         {
             //Arrange
-            string expected = "It's time to go to the beach";
+            WeatherForecast weatherForecast = new WeatherForecast(FakeHttpClient("{'main':{'temp':-5.5}}"));
             //Act
-            //string actual = await WeatherForecast.Instructions(30.5);            
+            var temperature = await weatherForecast.GetTemperature(It.IsAny<string>());
             //Assert
-            //Assert.Equal(expected, actual);
+            Assert.Equal(temperature, -5.5);
         }
         public static HttpClient FakeHttpClient(string response)
         {
