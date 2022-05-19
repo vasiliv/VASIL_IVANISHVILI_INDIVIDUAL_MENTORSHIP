@@ -14,7 +14,7 @@ namespace BL
         private static string url1 = "https://api.openweathermap.org/data/2.5/weather?q=";        
         private static string url2 = "&appid=";
         private static string units = "&units=metric";
-        public static async Task<double> GetTemperature(string city)
+        public static async Task <double?> GetTemperature(string city)
         {
             string finalUrl = $"{url1}{city}{url2}{apiKey}{units}";
             using (var client = new HttpClient())
@@ -31,21 +31,20 @@ namespace BL
                 }
                 else
                 {
-                    return 0.0f;
+                    return null;
                 }
             }
         }
-        public static async Task<string> Instructions(double temperature)
+        public static async Task<string> Instructions(float temperature)
         {
-            string result = temperature switch
+            return temperature switch
             {
                 < 0 => "Dress warmly",
                 >= 0 and < 20 => "It's fresh",
                 >= 20 and < 30 => "Good weather",
                 >= 30 => "It's time to go to the beach",
                 _ => "No such a temperature"
-            };
-            return result;
+            };            
         }
     }
 }
