@@ -35,7 +35,7 @@ namespace BL
                 }
             }
         }
-        public static async Task<string> Instructions(float temperature)
+        public static async Task<string> Instructions(double? temperature)
         {
             return temperature switch
             {
