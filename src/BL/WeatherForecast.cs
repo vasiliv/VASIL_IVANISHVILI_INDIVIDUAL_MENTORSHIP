@@ -36,9 +36,10 @@ namespace BL
                 else
                 {
                     return null;
-                }            
+                }
+            }
         }
-        public async Task<string> Instructions(double? temperature)
+        public static async Task<string> Instructions(float temperature)
         {
             return temperature switch
             {
