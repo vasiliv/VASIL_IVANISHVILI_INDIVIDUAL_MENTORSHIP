@@ -38,8 +38,7 @@ namespace BL
                     return null;
                 }
             }
-        }
-        public static async Task<string> Instructions(float temperature)
+        public async Task<string> Instructions(double? temperature)
         {
             return temperature switch
             {
@@ -48,7 +47,8 @@ namespace BL
                 >= 20 and < 30 => "Good weather",
                 >= 30 => "It's time to go to the beach",
                 _ => "No such a temperature"
-            };            
+            };
         }
-    }
+    }        
 }
+

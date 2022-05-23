@@ -20,7 +20,7 @@ jobs:
         fail_if_xl: 'true'
         message_if_xl: >
           'This PR exceeds the recommended size of ${{ secrets.PR_SIZE }} lines.
-          Please make sure you are NOT addressing multiple issues with one PR.’
+          Please make sure you are NOT addressing multiple issues with one PR.ï¿½
         github_api_url: 'api.github.com'
     
   build-and-test:
