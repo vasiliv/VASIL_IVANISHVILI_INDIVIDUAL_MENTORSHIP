@@ -14,14 +14,18 @@ namespace BL
         private static string url1 = "https://api.openweathermap.org/data/2.5/weather?q=";        
         private static string url2 = "&appid=";
         private static string units = "&units=metric";
-        public static async Task <double?> GetTemperature(string city)
+        
+        public HttpClient _httpClient { get; set; }
+        public WeatherForecast(HttpClient httpClient)
         {
-            string finalUrl = $"{url1}{city}{url2}{apiKey}{units}";
-            using (var client = new HttpClient())
-            {
-                HttpResponseMessage result = await client.GetAsync(finalUrl);
-
-                if (result.IsSuccessStatusCode)
+            _httpClient = httpClient;
+        }        
+        public async Task <double?> GetTemperature(string city)
+        {
+            string finalUrl = $"{url1}{city}{url2}{apiKey}{units}";     
+            
+            HttpResponseMessage result = await _httpClient.GetAsync(finalUrl);            
+            if (result.IsSuccessStatusCode)
                 {
                     var json = result.Content.ReadAsStringAsync().Result;
                     JObject obj = JsonConvert.DeserializeObject<JObject>(json);
@@ -34,8 +38,7 @@ namespace BL
                     return null;
                 }
             }
-        }
-        public static async Task<string> Instructions(double? temperature)
+        public async Task<string> Instructions(double? temperature)
         {
             return temperature switch
             {
@@ -44,7 +47,8 @@ namespace BL
                 >= 20 and < 30 => "Good weather",
                 >= 30 => "It's time to go to the beach",
                 _ => "No such a temperature"
-            };            
+            };
         }
-    }
+    }        
 }
+
