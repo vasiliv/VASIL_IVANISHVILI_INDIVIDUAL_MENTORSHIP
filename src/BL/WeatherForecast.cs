@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,11 +16,11 @@ namespace BL
         private static string url1 = "https://api.openweathermap.org/data/2.5/weather?q=";        
         private static string url2 = "&appid=";
         private static string units = "&units=metric";
-        
-        public HttpClient _httpClient { get; set; }
+
+        private readonly HttpClient _httpClient;        
         public WeatherForecast(HttpClient httpClient)
         {
-            _httpClient = httpClient;
+            _httpClient = httpClient;            
         }        
         public async Task <double?> GetTemperature(string city)
         {
@@ -38,7 +40,7 @@ namespace BL
                     return null;
                 }
             }
-        public async Task<string> Instructions(double? temperature)
+        public string Instructions(double? temperature)
         {
             return temperature switch
             {
@@ -48,7 +50,7 @@ namespace BL
                 >= 30 => "It's time to go to the beach",
                 _ => "No such a temperature"
             };
-        }
+        }        
     }        
 }
 
