@@ -26,7 +26,7 @@ namespace TestBL
         {
             //Arrange
             WeatherForecast weatherForecast = new WeatherForecast(FakeHttpClient("{'main':{'temp':-5.5}}"));
-            string instruction = await weatherForecast.Instructions(-5.5);
+            string instruction = weatherForecast.Instructions(-5.5);
             //Act
             string actual = "Dress warmly";
             //Assert

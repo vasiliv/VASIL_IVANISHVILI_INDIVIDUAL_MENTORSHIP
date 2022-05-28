@@ -38,7 +38,7 @@ namespace BL
                     return null;
                 }
             }
-        public async Task<string> Instructions(double? temperature)
+        public string Instructions(double? temperature)
         {
             return temperature switch
             {
