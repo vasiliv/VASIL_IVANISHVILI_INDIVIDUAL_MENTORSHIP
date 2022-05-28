@@ -11,7 +11,7 @@ namespace ConsoleApp
 {
     public class DependencyInjection
     {
-        public static T ServiceCollectionDI <T>()
+        public static T Resolve <T>()
         {
             IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)

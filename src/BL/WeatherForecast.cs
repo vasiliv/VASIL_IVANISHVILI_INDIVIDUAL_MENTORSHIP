@@ -17,12 +17,10 @@ namespace BL
         private static string url2 = "&appid=";
         private static string units = "&units=metric";
 
-        private readonly HttpClient _httpClient;
-        private readonly IConfiguration _configuration;
-        public WeatherForecast(HttpClient httpClient, IConfiguration configuration)
+        private readonly HttpClient _httpClient;        
+        public WeatherForecast(HttpClient httpClient)
         {
-            _httpClient = httpClient;
-            _configuration = configuration;
+            _httpClient = httpClient;            
         }        
         public async Task <double?> GetTemperature(string city)
         {
@@ -52,12 +50,7 @@ namespace BL
                 >= 30 => "It's time to go to the beach",
                 _ => "No such a temperature"
             };
-        }
-        public void GetminDatemaxDateFromJson()
-        {
-            int minDate = Int32.Parse(_configuration.GetSection("minDate").Value);
-            int maxDate = Int32.Parse(_configuration.GetSection("maxDate").Value);
-        }
+        }        
     }        
 }
 

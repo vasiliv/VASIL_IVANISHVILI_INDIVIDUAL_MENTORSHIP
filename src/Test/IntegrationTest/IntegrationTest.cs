@@ -1,4 +1,5 @@
 using BL;
+using ConsoleApp;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
@@ -11,7 +12,7 @@ namespace IntegrationTest
         public async Task GetTemperature_WhenCityIsCorrect_ReturnsTemperature()
         {
             //Arrange
-            WeatherForecast weatherForecast = new WeatherForecast(new HttpClient());
+            var weatherForecast = DependencyInjection.Resolve<WeatherForecast>();
             //Act
             var temperature = await weatherForecast.GetTemperature("Tbilisi");
             //Assert
@@ -21,7 +22,7 @@ namespace IntegrationTest
         public async Task GetTemperature_WhenCItyIsIncorrect_ReturnsNull()
         {
             //Arrange
-            WeatherForecast weatherForecast = new WeatherForecast(new HttpClient());
+            var weatherForecast = DependencyInjection.Resolve<WeatherForecast>();
             //Act
             var temperature = await weatherForecast.GetTemperature("TbilisiGeorgia");
             //Assert

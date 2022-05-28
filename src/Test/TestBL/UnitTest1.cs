@@ -22,7 +22,7 @@ namespace TestBL
             Assert.Equal(temperature, -5.5);
         }
         [Fact]
-        public async Task GetInstructions_WhenTemperatureIsCorrect_ReturnsTemperature()
+        public void GetInstructions_WhenTemperatureIsCorrect_ReturnsTemperature()
         {
             //Arrange
             WeatherForecast weatherForecast = new WeatherForecast(FakeHttpClient("{'main':{'temp':-5.5}}"));
