@@ -16,13 +16,14 @@ namespace ConsoleApp
             _weatherForecast = weatherForeCast;
         }
         public async Task Execute()
-        {
+        {    
+
             Console.WriteLine("Please enter the city:");
             string city = Console.ReadLine();
             double? temperature = await _weatherForecast.GetTemperature(city);
             Console.WriteLine(temperature);
             string instruction = _weatherForecast.Instructions(temperature);
-            Console.WriteLine(instruction);
+            Console.WriteLine(instruction);            
         }
     }
 }

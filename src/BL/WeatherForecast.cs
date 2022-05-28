@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,11 +16,13 @@ namespace BL
         private static string url1 = "https://api.openweathermap.org/data/2.5/weather?q=";        
         private static string url2 = "&appid=";
         private static string units = "&units=metric";
-        
-        public HttpClient _httpClient { get; set; }
-        public WeatherForecast(HttpClient httpClient)
+
+        private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
+        public WeatherForecast(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
+            _configuration = configuration;
         }        
         public async Task <double?> GetTemperature(string city)
         {
@@ -48,6 +52,11 @@ namespace BL
                 >= 30 => "It's time to go to the beach",
                 _ => "No such a temperature"
             };
+        }
+        public void GetminDatemaxDateFromJson()
+        {
+            int minDate = Int32.Parse(_configuration.GetSection("minDate").Value);
+            int maxDate = Int32.Parse(_configuration.GetSection("maxDate").Value);
         }
     }        
 }

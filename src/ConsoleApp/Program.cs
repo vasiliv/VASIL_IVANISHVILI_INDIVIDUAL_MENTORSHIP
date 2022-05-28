@@ -6,3 +6,4 @@ using ConsoleApp;
 var job = DependencyInjection.ServiceCollectionDI<MainJob>();
 await job.Execute();
 
+
