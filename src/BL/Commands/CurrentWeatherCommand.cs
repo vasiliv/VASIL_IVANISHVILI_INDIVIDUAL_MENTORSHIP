@@ -19,8 +19,7 @@ namespace BL.Commands
             _weatherForecast = weatherForeCast;
         }
         public async Task<double?> Handle(CurrentWeatherCommand request, CancellationToken cancellationToken)
-        {
-            //move from execute?
+        {            
             Console.WriteLine("Please enter the city:");
             string city = Console.ReadLine();
             double? temperature = await _weatherForecast.GetTemperature(city);
