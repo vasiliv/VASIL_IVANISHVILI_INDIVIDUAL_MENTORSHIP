@@ -12,22 +12,16 @@ namespace BL
 {
     public class WeatherForecast
     {
-        private static string apiKey = "c1c4d772f711221a4a1df5be101bb4a5";
-        private static string url1 = "https://api.openweathermap.org/data/2.5/weather?q=";        
-        private static string url2 = "&appid=";
-        private static string units = "&units=metric";
-
         private readonly HttpClient _httpClient;        
         public WeatherForecast(HttpClient httpClient)
         {
-            _httpClient = httpClient;            
+            _httpClient = httpClient;
         }        
         public async Task <double?> GetTemperature(string city)
         {
-            string finalUrl = $"{url1}{city}{url2}{apiKey}{units}";     
-            
-            HttpResponseMessage result = await _httpClient.GetAsync(finalUrl);            
-            if (result.IsSuccessStatusCode)
+            string url = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid=c1c4d772f711221a4a1df5be101bb4a5&units=metric";
+                HttpResponseMessage result = await _httpClient.GetAsync(url);
+                if (result.IsSuccessStatusCode)
                 {
                     var json = result.Content.ReadAsStringAsync().Result;
                     JObject obj = JsonConvert.DeserializeObject<JObject>(json);
@@ -39,7 +33,7 @@ namespace BL
                 {
                     return null;
                 }
-            }
+        }
         public string Instructions(double? temperature)
         {
             return temperature switch
