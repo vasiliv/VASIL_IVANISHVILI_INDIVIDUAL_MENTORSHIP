@@ -1,4 +1,6 @@
 ﻿using BL;
+using BL.Commands;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -23,6 +25,7 @@ namespace ConsoleApp
                 .AddSingleton<MainJob>()
                 .AddSingleton<WeatherForecast>()
                 .AddHttpClient()
+                .AddMediatR(typeof(CurrentWeatherCommand).Assembly)
                 .BuildServiceProvider()
                 .GetRequiredService<T>();
         }
