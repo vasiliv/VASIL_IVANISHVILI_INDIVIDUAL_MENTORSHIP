@@ -45,12 +45,7 @@ namespace BL
                 >= 30 => "It's time to go to the beach",
                 _ => "No such a temperature"
             };
-        }
-        public async Task<Coordinate> GetCoordinateByCity(string name)
-        {
-            var url = $"http://api.openweathermap.org/geo/1.0/direct?q={name}&limit=1&appid=7e66067382ed6a093c3e4b6c22940505";
-
-        }
+        }        
     }   
 }
 
