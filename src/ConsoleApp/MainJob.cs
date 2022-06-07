@@ -20,7 +20,7 @@ namespace ConsoleApp
         }
         public async Task Execute()
         {
-            Console.WriteLine("Please enter the number:");
+            Console.WriteLine("Please enter the number:\n1 - One day forecast\n2 - Several day forecast\n3 - Several cities forecast\n0 - Exit ");
             int choice = Int16.Parse(Console.ReadLine());
             await NumberChoice(choice);            
         }
@@ -35,7 +35,7 @@ namespace ConsoleApp
                     await _mediator.Send(new CurrentWeatherCommand());
                     break;
                 case 2:
-                    //go to FutureWeatherCommand,
+                    await _mediator.Send(new FutureWeatherCommand());
                     break;
                 default:
                     Console.WriteLine("Please enter correct number");
