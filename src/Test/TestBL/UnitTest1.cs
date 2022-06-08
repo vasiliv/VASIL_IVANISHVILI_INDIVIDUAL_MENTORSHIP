@@ -1,4 +1,6 @@
 using BL;
+using ConsoleApp;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using Moq.Protected;
 using System.Net;
@@ -10,12 +12,13 @@ using Xunit;
 namespace TestBL
 {
     public class UnitTest1
-    {        
+    {
         [Fact]
         public async Task GetTemperature_WhenCityIsCorrect_ReturnsTemperature()
         {
             //Arrange
-            WeatherForecast weatherForecast = new WeatherForecast(FakeHttpClient("{'main':{'temp':-5.5}}"));
+            var conf = DependencyInjection.Resolve<IConfiguration>();
+            WeatherForecast weatherForecast = new WeatherForecast(FakeHttpClient("{'main':{'temp':-5.5}}"), conf);
             //Act
             var temperature = await weatherForecast.GetTemperature(It.IsAny<string>());
             //Assert
@@ -25,12 +28,13 @@ namespace TestBL
         public void GetInstructions_WhenTemperatureIsCorrect_ReturnsTemperature()
         {
             //Arrange
-            WeatherForecast weatherForecast = new WeatherForecast(FakeHttpClient("{'main':{'temp':-5.5}}"));
+            var conf = DependencyInjection.Resolve<IConfiguration>();
+            WeatherForecast weatherForecast = new WeatherForecast(FakeHttpClient("{'main':{'temp':-5.5}}"), conf);
             string instruction = weatherForecast.Instructions(-5.5);
             //Act
             string actual = "Dress warmly";
             //Assert
-            Assert.Equal(instruction,actual);
+            Assert.Equal(instruction, actual);
         }
         public static HttpClient FakeHttpClient(string response)
         {
