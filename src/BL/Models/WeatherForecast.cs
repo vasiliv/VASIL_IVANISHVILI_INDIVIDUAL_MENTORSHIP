@@ -23,7 +23,7 @@ namespace BL
         }
         public async Task<double?> GetTemperature(string city)
         {            
-            string url = $"{_configuration.GetSection("urlForGetTemperaturePart1").Value}{city}{_configuration.GetSection("urlForGetTemperaturePart2").Value}";
+            string url = $"{_configuration.GetValue<string>("urlForGetTemperaturePart1")}{city}{_configuration.GetValue<string>("urlForGetTemperaturePart2")}";
             HttpResponseMessage result = await _httpClient.GetAsync(url);
             if (result.IsSuccessStatusCode)
             {
@@ -51,7 +51,7 @@ namespace BL
         }
         public async Task<Coordinate> GetCoordinateByCity(string name)
         {            
-            string url = $"{_configuration.GetSection("urlForGetCoordinateByCityPart1").Value}{name}{_configuration.GetSection("urlForGetCoordinateByCityPart2").Value}";
+            string url = $"{_configuration.GetValue<string>("urlForGetCoordinateByCityPart1")}{name}{_configuration.GetValue<string>("urlForGetCoordinateByCityPart2")}";
             HttpResponseMessage result = await _httpClient.GetAsync(url);
 
             if (result.IsSuccessStatusCode)
@@ -75,7 +75,7 @@ namespace BL
         }
         public async Task<IEnumerable<double>> GetTemperatureByCoordinatesAndDays(Coordinate coordinate, int numDays)
         {            
-            string url = $"{_configuration.GetSection("urlForGetTemperatureByCoordinatesAndDaysPart1").Value}{coordinate.Latitude}&lon={coordinate.Longitude}{_configuration.GetSection("urlForGetTemperatureByCoordinatesAndDaysPart2").Value}";
+            string url = $"{_configuration.GetValue<string>("urlForGetTemperatureByCoordinatesAndDaysPart1")}{coordinate.Latitude}&lon={coordinate.Longitude}{_configuration.GetValue<string>("urlForGetTemperatureByCoordinatesAndDaysPart2")}";
             HttpResponseMessage result = await _httpClient.GetAsync(url);
             double[] temperature = new double[numDays];
 
