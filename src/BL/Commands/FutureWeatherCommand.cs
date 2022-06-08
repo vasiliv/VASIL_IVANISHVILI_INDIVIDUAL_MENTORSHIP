@@ -25,7 +25,7 @@ namespace BL.Commands
             Console.WriteLine("Please enter the city:");            
             Coordinate coordinate = await _weatherForecast.GetCoordinateByCity(Console.ReadLine());
             Console.WriteLine("Please enter number of the days to forecast:");            
-            int numDays = Int16.Parse(Console.ReadLine());            
+            int numDays = int.Parse(Console.ReadLine());            
 
             await _weatherForecast.GetTemperatureByCoordinatesAndDays(coordinate, numDays);
             

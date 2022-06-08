@@ -15,15 +15,15 @@ namespace BL
     public class WeatherForecast
     {
         private readonly HttpClient _httpClient;
-        //private readonly IConfiguration _configuration;
-        public WeatherForecast(HttpClient httpClient/*, IConfiguration configuration*/)
+        private readonly IConfiguration _configuration;
+        public WeatherForecast(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            //_configuration = configuration;
+            _configuration = configuration;
         }
         public async Task<double?> GetTemperature(string city)
-        {
-            string url = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid=c1c4d772f711221a4a1df5be101bb4a5&units=metric";
+        {            
+            string url = $"{_configuration.GetSection("urlForGetTemperaturePart1").Value}{city}{_configuration.GetSection("urlForGetTemperaturePart2").Value}";
             HttpResponseMessage result = await _httpClient.GetAsync(url);
             if (result.IsSuccessStatusCode)
             {
@@ -50,8 +50,8 @@ namespace BL
             };
         }
         public async Task<Coordinate> GetCoordinateByCity(string name)
-        {
-            var url = $"http://api.openweathermap.org/geo/1.0/direct?q={name}&limit=1&appid=7e66067382ed6a093c3e4b6c22940505";
+        {            
+            string url = $"{_configuration.GetSection("urlForGetCoordinateByCityPart1").Value}{name}{_configuration.GetSection("urlForGetCoordinateByCityPart2").Value}";
             HttpResponseMessage result = await _httpClient.GetAsync(url);
 
             if (result.IsSuccessStatusCode)
@@ -74,8 +74,8 @@ namespace BL
             return null;
         }
         public async Task<IEnumerable<double>> GetTemperatureByCoordinatesAndDays(Coordinate coordinate, int numDays)
-        {
-            var url = $"https://api.openweathermap.org/data/2.5/onecall?lat={coordinate.Latitude}&lon={coordinate.Longitude}&exclude=current,minutely,hourly,alerts&appid=7e66067382ed6a093c3e4b6c22940505&units=metric";
+        {            
+            string url = $"{_configuration.GetSection("urlForGetTemperatureByCoordinatesAndDaysPart1").Value}{coordinate.Latitude}&lon={coordinate.Longitude}{_configuration.GetSection("urlForGetTemperatureByCoordinatesAndDaysPart2").Value}";
             HttpResponseMessage result = await _httpClient.GetAsync(url);
             double[] temperature = new double[numDays];
 
@@ -84,11 +84,6 @@ namespace BL
                 var json = await result.Content.ReadAsStringAsync();
                 var deserializedJson = JsonConvert.DeserializeObject<JToken>(json);
                 var daily = deserializedJson["daily"];
-                //Console.WriteLine(daily);
-
-                //important
-                //var daily0 = daily[1]["temp"]["day"];                
-
                 
                 for (int i = 0; i < numDays; i++)
                 {                    
