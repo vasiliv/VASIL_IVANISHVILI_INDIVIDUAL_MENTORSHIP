@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -92,6 +93,10 @@ namespace BL
                 }
             }
             return temperature;
+        }
+        public IEnumerable<string> SplitStringToCityArray(string cities)
+        {
+            return cities.Split(',').ToList<string>();
         }
     }   
 }
