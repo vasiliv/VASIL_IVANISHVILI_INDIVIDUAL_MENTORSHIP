@@ -37,6 +37,9 @@ namespace ConsoleApp
                 case 2:
                     await _mediator.Send(new FutureWeatherCommand());
                     break;
+                case 3:
+                    await _mediator.Send(new MaxTemprWeatherCommand());
+                    break;
                 default:
                     Console.WriteLine("Please enter correct number");
                     break;
