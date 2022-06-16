@@ -12,7 +12,7 @@ namespace IntegrationTest
         [Fact]
         public async Task GetTemperature_WhenCityIsCorrect_ReturnsTemperature()
         {
-            using CancellationTokenSource tokenSource = new CancellationTokenSource(5000);
+            using CancellationTokenSource tokenSource = new CancellationTokenSource();
             //Arrange
             var weatherForecast = DependencyInjection.Resolve<WeatherForecast>();
             //Act
@@ -23,7 +23,7 @@ namespace IntegrationTest
         [Fact]
         public async Task GetTemperature_WhenCItyIsIncorrect_ReturnsNull()
         {
-            using CancellationTokenSource tokenSource = new CancellationTokenSource(5000);
+            using CancellationTokenSource tokenSource = new CancellationTokenSource();
             //Arrange
             var weatherForecast = DependencyInjection.Resolve<WeatherForecast>();
             //Act

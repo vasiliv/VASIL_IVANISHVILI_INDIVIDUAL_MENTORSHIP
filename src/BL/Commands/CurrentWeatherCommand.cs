@@ -24,7 +24,7 @@ namespace BL.Commands
         public async Task<double?> Handle(CurrentWeatherCommand request, CancellationToken cancellationToken)
         {
             //later read from appsettings.json
-            using CancellationTokenSource tokenSource = new CancellationTokenSource(5000);
+            using CancellationTokenSource tokenSource = new CancellationTokenSource();
             Console.WriteLine("Please enter the city:");
             string city = Console.ReadLine();
             double? temperature = await _weatherForecast.GetTemperature(city, tokenSource.Token);
