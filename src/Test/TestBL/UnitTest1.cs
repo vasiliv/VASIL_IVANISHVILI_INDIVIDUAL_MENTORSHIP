@@ -15,13 +15,12 @@ namespace TestBL
     {
         [Fact]
         public async Task GetTemperature_WhenCityIsCorrect_ReturnsTemperature()
-        {
-            using CancellationTokenSource tokenSource = new CancellationTokenSource(5000);
+        {            
             //Arrange
             var conf = DependencyInjection.Resolve<IConfiguration>();
             WeatherForecast weatherForecast = new WeatherForecast(FakeHttpClient("{'main':{'temp':-5.5}}"), conf);
             //Act
-            var temperature = await weatherForecast.GetTemperature(It.IsAny<string>(), tokenSource.Token);
+            var temperature = await weatherForecast.GetTemperature(It.IsAny<string>());
             //Assert
             Assert.Equal(temperature, -5.5);
         }

@@ -22,12 +22,10 @@ namespace BL.Commands
             _configuration = configuration;
         }
         public async Task<double?> Handle(CurrentWeatherCommand request, CancellationToken cancellationToken)
-        {
-            //later read from appsettings.json
-            using CancellationTokenSource tokenSource = new CancellationTokenSource();
+        {            
             Console.WriteLine("Please enter the city:");
             string city = Console.ReadLine();
-            double? temperature = await _weatherForecast.GetTemperature(city, tokenSource.Token);
+            double? temperature = await _weatherForecast.GetTemperature(city);
             Console.WriteLine(temperature);
             string instruction = _weatherForecast.Instructions(temperature);
             Console.WriteLine(instruction);

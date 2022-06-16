@@ -11,23 +11,21 @@ namespace IntegrationTest
     {
         [Fact]
         public async Task GetTemperature_WhenCityIsCorrect_ReturnsTemperature()
-        {
-            using CancellationTokenSource tokenSource = new CancellationTokenSource();
+        {            
             //Arrange
             var weatherForecast = DependencyInjection.Resolve<WeatherForecast>();
             //Act
-            var temperature = await weatherForecast.GetTemperature("Tbilisi", tokenSource.Token);
+            var temperature = await weatherForecast.GetTemperature("Tbilisi");
             //Assert
             Assert.InRange<double>((double)temperature,- 50, 50);
         }
         [Fact]
         public async Task GetTemperature_WhenCItyIsIncorrect_ReturnsNull()
-        {
-            using CancellationTokenSource tokenSource = new CancellationTokenSource();
+        {            
             //Arrange
             var weatherForecast = DependencyInjection.Resolve<WeatherForecast>();
             //Act
-            var temperature = await weatherForecast.GetTemperature("TbilisiGeorgia", tokenSource.Token);
+            var temperature = await weatherForecast.GetTemperature("TbilisiGeorgia");
             //Assert
             Assert.Null(temperature);
         }

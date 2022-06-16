@@ -23,6 +23,23 @@ namespace BL
             _httpClient = httpClient;
             _configuration = configuration;
         }
+        public async Task<double?> GetTemperature(string city)
+        {
+            string url = $"{_configuration.GetValue<string>("urlForGetTemperaturePart1")}{city}{_configuration.GetValue<string>("urlForGetTemperaturePart2")}";
+            HttpResponseMessage result = await _httpClient.GetAsync(url);
+            if (result.IsSuccessStatusCode)
+            {
+                var json = await result.Content.ReadAsStringAsync();
+                JObject obj = JsonConvert.DeserializeObject<JObject>(json);
+                JObject mainObj = obj["main"] as JObject;
+                double temperature = (double)mainObj["temp"];
+                return temperature;
+            }
+            else
+            {
+                return null;
+            }
+        }
         public async Task<double?> GetTemperature(string city, CancellationToken token)
         {            
             string url = $"{_configuration.GetValue<string>("urlForGetTemperaturePart1")}{city}{_configuration.GetValue<string>("urlForGetTemperaturePart2")}";
