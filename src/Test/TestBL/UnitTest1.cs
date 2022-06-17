@@ -15,7 +15,7 @@ namespace TestBL
     {
         [Fact]
         public async Task GetTemperature_WhenCityIsCorrect_ReturnsTemperature()
-        {
+        {            
             //Arrange
             var conf = DependencyInjection.Resolve<IConfiguration>();
             WeatherForecast weatherForecast = new WeatherForecast(FakeHttpClient("{'main':{'temp':-5.5}}"), conf);

@@ -9,6 +9,7 @@ using System.Data;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BL
@@ -21,14 +22,15 @@ namespace BL
         {
             _httpClient = httpClient;
             _configuration = configuration;
-        }
-        public async Task<double?> GetTemperature(string city)
+        }        
+        public Task<double?> GetTemperature(string city) => GetTemperature(city, CancellationToken.None);
+        public async Task<double?> GetTemperature(string city, CancellationToken token)
         {            
             string url = $"{_configuration.GetValue<string>("urlForGetTemperaturePart1")}{city}{_configuration.GetValue<string>("urlForGetTemperaturePart2")}";
-            HttpResponseMessage result = await _httpClient.GetAsync(url);
+            HttpResponseMessage result = await _httpClient.GetAsync(url, token);
             if (result.IsSuccessStatusCode)
             {
-                var json = result.Content.ReadAsStringAsync().Result;
+                var json = await result.Content.ReadAsStringAsync();
                 JObject obj = JsonConvert.DeserializeObject<JObject>(json);
                 JObject mainObj = obj["main"] as JObject;
                 double temperature = (double)mainObj["temp"];

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,9 +15,11 @@ namespace BL.Commands
     public class CurrentWeatherCommandHandler : IRequestHandler<CurrentWeatherCommand, double?>
     {
         private readonly WeatherForecast _weatherForecast;
-        public CurrentWeatherCommandHandler(WeatherForecast weatherForeCast)
+        private readonly IConfiguration _configuration;
+        public CurrentWeatherCommandHandler(WeatherForecast weatherForeCast, IConfiguration configuration)
         {
             _weatherForecast = weatherForeCast;
+            _configuration = configuration;
         }
         public async Task<double?> Handle(CurrentWeatherCommand request, CancellationToken cancellationToken)
         {            
