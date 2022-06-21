@@ -15,13 +15,11 @@ namespace WebAPI.Controllers
         }
         [HttpGet("currentWeather/{city}")]
         public async Task<double?> GetCurrentWeather([FromRoute] string city)
-        {
-            //await _mediator.Send(new CurrentWeatherCommand());            
-            var result = await _mediator.Send(new CurrentWeatherCommand
+        {                      
+            return await _mediator.Send(new CurrentWeatherCommand
             {
                 City = city
-            });
-            return result;
+            });            
         }
     };    
 }
