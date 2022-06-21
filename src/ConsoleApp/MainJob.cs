@@ -24,6 +24,7 @@ namespace ConsoleApp
             int choice = Int16.Parse(Console.ReadLine());
             await NumberChoice(choice);            
         }
+        //Choices only for console app
         public async Task NumberChoice(int choice)
         {            
             switch(choice)
@@ -32,7 +33,12 @@ namespace ConsoleApp
                     Environment.Exit(0);
                     break;
                 case 1:
-                    await _mediator.Send(new CurrentWeatherCommand());
+                    Console.WriteLine("Please enter the city:");
+                    string city = Console.ReadLine();                    
+                    //passing value to CurrentWeatherCommand City property
+                    await _mediator.Send(new CurrentWeatherCommand { 
+                        City = city
+                    });
                     break;
                 case 2:
                     await _mediator.Send(new FutureWeatherCommand());

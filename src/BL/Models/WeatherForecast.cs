@@ -22,7 +22,8 @@ namespace BL
         {
             _httpClient = httpClient;
             _configuration = configuration;
-        }        
+        }
+        //overloaded version of GetTemperature(string city, CancellationToken token)
         public Task<double?> GetTemperature(string city) => GetTemperature(city, CancellationToken.None);
         public async Task<double?> GetTemperature(string city, CancellationToken token)
         {            

@@ -10,7 +10,7 @@ namespace BL.Commands
 {
     public class CurrentWeatherCommand : IRequest<double?>
     {
-        public string City { get; set; }
+        public string City { get; set; }        
     }
     public class CurrentWeatherCommandHandler : IRequestHandler<CurrentWeatherCommand, double?>
     {
@@ -19,13 +19,13 @@ namespace BL.Commands
         public CurrentWeatherCommandHandler(WeatherForecast weatherForeCast, IConfiguration configuration)
         {
             _weatherForecast = weatherForeCast;
-            _configuration = configuration;
+            _configuration = configuration;           
         }
+        //Commands must be same for console and api
         public async Task<double?> Handle(CurrentWeatherCommand request, CancellationToken cancellationToken)
-        {            
-            Console.WriteLine("Please enter the city:");
-            string city = Console.ReadLine();
-            double? temperature = await _weatherForecast.GetTemperature(city);
+        {
+            //get City property from CurrentWeatherCommand - request.City
+            double? temperature = await _weatherForecast.GetTemperature(request.City);
             Console.WriteLine(temperature);
             string instruction = _weatherForecast.Instructions(temperature);
             Console.WriteLine(instruction);
