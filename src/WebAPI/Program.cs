@@ -1,3 +1,9 @@
+using BL;
+using BL.Commands;
+using MediatR;
+using System.Reflection;
+using WebAPI.Controllers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +12,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//My addings
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<WeatherForecast>();
+builder.Services.AddMediatR(typeof(CurrentWeatherCommand).Assembly);
 
 var app = builder.Build();
 
