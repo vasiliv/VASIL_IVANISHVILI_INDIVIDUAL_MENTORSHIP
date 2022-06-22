@@ -21,5 +21,14 @@ namespace WebAPI.Controllers
                 City = city
             });            
         }
+        [HttpGet("currentWeather/{city}/days/{numDays}")]
+        public async Task <IEnumerable<string>> GetFutureWeather([FromRoute] string city, [FromRoute] int numDays)
+        {            
+            return await _mediator.Send(new FutureWeatherCommand
+                {
+                    City = city,
+                    NumDays = numDays
+            });
+        }
     };    
 }

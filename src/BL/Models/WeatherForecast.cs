@@ -76,12 +76,13 @@ namespace BL
                 }
             }
             return null;
-        }
-        public async Task<IEnumerable<double>> GetTemperatureByCoordinatesAndDays(Coordinate coordinate, int numDays)
+        }        
+        public async Task<IEnumerable<string>> GetTemperatureByCoordinatesAndDays(Coordinate coordinate, int numDays)
         {            
             string url = $"{_configuration.GetValue<string>("urlForGetTemperatureByCoordinatesAndDaysPart1")}{coordinate.Latitude}&lon={coordinate.Longitude}{_configuration.GetValue<string>("urlForGetTemperatureByCoordinatesAndDaysPart2")}";
             HttpResponseMessage result = await _httpClient.GetAsync(url);
             double[] temperature = new double[numDays];
+            string[] output = new string[numDays];
 
             if (result.IsSuccessStatusCode)
             {
@@ -91,11 +92,12 @@ namespace BL
                 
                 for (int i = 0; i < numDays; i++)
                 {                    
-                    temperature[i] = (double)daily[i]["temp"]["day"];                    
+                    temperature[i] = (double)daily[i]["temp"]["day"];
                     Console.WriteLine($"Day {i+1} temperature {temperature[i]} {Instructions(temperature[i])}");
+                    output[i] = $"Day {i + 1} temperature {temperature[i]} {Instructions(temperature[i])}";
                 }
-            }
-            return temperature;
+            }            
+            return output;
         }
         public IEnumerable<string> SplitStringToCityArray(string cities)
         {

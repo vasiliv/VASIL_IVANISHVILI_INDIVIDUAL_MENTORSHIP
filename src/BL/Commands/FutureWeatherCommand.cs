@@ -9,9 +9,13 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace BL.Commands
-{
-    public class FutureWeatherCommand : IRequest<Unit> { }
-    public class FutureWeatherCommandHandler : IRequestHandler<FutureWeatherCommand, Unit>
+{    
+    public class FutureWeatherCommand : IRequest<IEnumerable<string>>
+    {
+        public int NumDays { get; set; }
+        public string City { get; set; }
+    }    
+    public class FutureWeatherCommandHandler : IRequestHandler<FutureWeatherCommand, IEnumerable<string>>
     {
         private readonly WeatherForecast _weatherForecast;
         private readonly IConfiguration _configuration;
@@ -19,17 +23,13 @@ namespace BL.Commands
         {
             _weatherForecast = weatherForeCast;
             _configuration = configuration;
-        }
-        public async Task<Unit> Handle(FutureWeatherCommand request, CancellationToken cancellationToken)
+        }        
+        public async Task<IEnumerable<string>> Handle(FutureWeatherCommand request, CancellationToken cancellationToken)
         {
-            Console.WriteLine("Please enter the city:");            
-            Coordinate coordinate = await _weatherForecast.GetCoordinateByCity(Console.ReadLine());
-            Console.WriteLine("Please enter number of the days to forecast:");            
-            int numDays = int.Parse(Console.ReadLine());            
-
-            await _weatherForecast.GetTemperatureByCoordinatesAndDays(coordinate, numDays);
-            
-            return Unit.Value;
+            //get City property from CurrentWeatherCommand - request.City
+            Coordinate coordinate = await _weatherForecast.GetCoordinateByCity(request.City);
+            //get City property from CurrentWeatherCommand - request.NumDays
+            return await _weatherForecast.GetTemperatureByCoordinatesAndDays(coordinate, request.NumDays);            
         }
     }
 }
