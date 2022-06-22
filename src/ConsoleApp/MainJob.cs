@@ -35,13 +35,25 @@ namespace ConsoleApp
                 case 1:
                     Console.WriteLine("Please enter the city:");
                     string city = Console.ReadLine();                    
+                    
                     //passing value to CurrentWeatherCommand City property
                     await _mediator.Send(new CurrentWeatherCommand { 
                         City = city
                     });
                     break;
                 case 2:
-                    await _mediator.Send(new FutureWeatherCommand());
+                    Console.WriteLine("Please enter the city:");
+                    //city2 because of case 2
+                    string city2 = Console.ReadLine();
+                    Console.WriteLine("Please enter number of the days to forecast:");
+                    int numDays = int.Parse(Console.ReadLine());
+
+                    //passing values to FutureWeatherCommand City and NumDays property
+                    await _mediator.Send(new FutureWeatherCommand
+                    {
+                        City = city2,
+                        NumDays = numDays
+                    });                    
                     break;
                 case 3:
                     await _mediator.Send(new MaxTemprWeatherCommand());
