@@ -1,6 +1,7 @@
 using BL;
 using BL.Commands;
 using DAL.Context;
+using Hangfire;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
@@ -21,8 +22,15 @@ builder.Services.AddHttpClient();
 builder.Services.AddSingleton<WeatherForecast>();
 builder.Services.AddMediatR(typeof(CurrentWeatherCommand).Assembly);
 
-//builder.Services.AddDbContext<WeatherForecastDbContext>(options =>
-//       options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<WeatherForecastDbContext>(options =>
+       options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddHangfire(x =>
+{
+    x.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+builder.Services.AddHangfireServer();
+
 
 var app = builder.Build();
 
@@ -38,5 +46,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseHangfireDashboard();
 
 app.Run();

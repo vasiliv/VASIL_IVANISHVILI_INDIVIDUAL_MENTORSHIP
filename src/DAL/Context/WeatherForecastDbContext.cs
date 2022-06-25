@@ -8,11 +8,10 @@ using Microsoft.Extensions.Configuration;
 namespace DAL.Context
 {
     public partial class WeatherForecastDbContext : DbContext
-    {
-        private readonly IConfiguration _configuration;
-        public WeatherForecastDbContext(IConfiguration configuration)
+    {        
+        public WeatherForecastDbContext()
         {
-            _configuration = configuration;
+            
         }
 
         public WeatherForecastDbContext(DbContextOptions<WeatherForecastDbContext> options)
@@ -22,11 +21,10 @@ namespace DAL.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-
-                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
-            }            
+            //if (!optionsBuilder.IsConfigured)
+            //{
+            //    optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+            //}            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
