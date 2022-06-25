@@ -1,6 +1,9 @@
 using BL;
 using BL.Commands;
+using DAL.Context;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 using System.Reflection;
 using WebAPI.Controllers;
 
@@ -17,6 +20,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<WeatherForecast>();
 builder.Services.AddMediatR(typeof(CurrentWeatherCommand).Assembly);
+
+//builder.Services.AddDbContext<WeatherForecastDbContext>(options =>
+//       options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
