@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>dotnet-BackgroundJob-D9BEA69E-3CAD-4D53-A73B-38C41FF37B56</UserSecretsId>
   </PropertyGroup>
 
