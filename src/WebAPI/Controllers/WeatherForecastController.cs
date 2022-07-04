@@ -1,4 +1,5 @@
 using BL.Commands;
+using Hangfire;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +10,12 @@ namespace WebAPI.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public WeatherForecastController(IMediator mediator)
+        private readonly IRecurringJobManager _recurringJobManager;
+        public WeatherForecastController(IMediator mediator,
+                IRecurringJobManager recurringJobManager)
         {
             _mediator = mediator;
+            _recurringJobManager = recurringJobManager;
         }
         [HttpGet("currentWeather/{city}")]
         public async Task<double?> GetCurrentWeather([FromRoute] string city)
@@ -29,6 +33,12 @@ namespace WebAPI.Controllers
                     City = city,
                     NumDays = numDays
             });
+        }
+        [HttpGet("/ReccuringJob")]
+        public ActionResult CreateReccuringJob()
+        {
+            _recurringJobManager.AddOrUpdate("jobId", () => _jobTestService.ReccuringJob(), Cron.Minutely);
+            return Ok();
         }
     };    
 }
