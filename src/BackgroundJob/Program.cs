@@ -13,23 +13,27 @@ using System.Threading.Tasks;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using System.Configuration;
+using Hangfire.Storage;
+using BL;
 
 namespace BackgroundJob
 {
     public class Program
     {
-        public static IConfigurationRoot Configuration { get; }
+        //for using configuration in whole class
+        public static IConfiguration ConfFromAppsettings { get; set; }
+        
         public static void Main(string[] args)
         {
             //Load Serilog configuration from appsettings.json
-            var configuration = new ConfigurationBuilder()
+            var configuration = new ConfigurationBuilder()                
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile(path: "appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
-                .CreateLogger();
+                .CreateLogger();            
 
             CreateHostBuilder(args).Build().Run();
         }
@@ -41,29 +45,32 @@ namespace BackgroundJob
                      builder.Configure(app =>
                      {
                          app.UseRouting();
-
-                         //adding hangfire dashboard
+                         //add recurring job
+                         RecurringJob.AddOrUpdate<BL.WeatherForecast>("Job Id",
+                            x => x.SplitStringToCityArray(ConfFromAppsettings.GetValue<string>("Cities")), Cron.Minutely);
+                         //add hangfire dashboard
                          app.UseHangfireDashboard();
                          app.UseEndpoints(endpoints =>
                          {
                              endpoints.MapHangfireDashboard();
-                         });
+                         });                         
                      });
                  })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    //adding hangfire server                    
-                    //services.AddHangfire(conf =>
-                    //conf.UseSqlServerStorage("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BackgroundJob;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
-                    //services.AddSingleton<IConfiguration>(Configuration);
+                    //because of missing this line could not reach Connection string from appsettings.json
+                    IConfiguration configuration = hostContext.Configuration;
+                    ConfFromAppsettings = configuration;
+                    //adding hangfire server           
                     services.AddHangfire(x =>
                     {
-                        x.UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection"));
+                        x.UseSqlServerStorage(configuration.GetConnectionString("DefaultConnection"));
                     });
                     services.AddHangfireServer();                    
                     services.AddHostedService<Worker>();
                 })
             //added
-            .UseSerilog(); 
+            .UseSerilog();
     }
+
 }

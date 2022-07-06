@@ -28,7 +28,7 @@ namespace BL.Commands
         {
             //get City property from CurrentWeatherCommand - request.City
             Coordinate coordinate = await _weatherForecast.GetCoordinateByCity(request.City);
-            //get City property from CurrentWeatherCommand - request.NumDays
+            //get NumDays property from CurrentWeatherCommand - request.NumDays
             return await _weatherForecast.GetTemperatureByCoordinatesAndDays(coordinate, request.NumDays);            
         }
     }

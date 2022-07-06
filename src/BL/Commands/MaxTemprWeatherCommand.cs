@@ -11,10 +11,13 @@ using System.Threading.Tasks;
 
 namespace BL.Commands
 {
-    public class MaxTemprWeatherCommand: IRequest<Unit>
+    //public class MaxTemprWeatherCommand: IRequest<Unit>
+    public class MaxTemprWeatherCommand : IRequest<double?>
     {
+        public string Cities { get; set; }
     }
-    public class MaxTemprWeatherCommandHandler : IRequestHandler<MaxTemprWeatherCommand, Unit>
+    //public class MaxTemprWeatherCommandHandler : IRequestHandler<MaxTemprWeatherCommand, Unit>
+    public class MaxTemprWeatherCommandHandler : IRequestHandler<MaxTemprWeatherCommand, double?>
     {
         private readonly WeatherForecast _weatherForecast;
         private readonly IConfiguration _configuration;
@@ -24,16 +27,14 @@ namespace BL.Commands
             _weatherForecast = weatherForeCast;
             _configuration = configuration;
         }
-        public async Task<Unit> Handle(MaxTemprWeatherCommand request, CancellationToken cancellationToken)
+        public async Task<double?> Handle(MaxTemprWeatherCommand request, CancellationToken cancellationToken)
         {           
             using CancellationTokenSource tokenSource = new CancellationTokenSource(_configuration.GetValue<int>("timeout"));
 
             var watch = new Stopwatch();
             watch.Start();
-
-            Console.WriteLine("Please enter list of cities:");
-            string cities = Console.ReadLine();
-            IEnumerable<string> cityArray = _weatherForecast.SplitStringToCityArray(cities);
+            
+            IEnumerable<string> cityArray = _weatherForecast.SplitStringToCityArray(request.Cities);
 
             List<Task<(string, double?)>> list = new();
 
@@ -57,7 +58,8 @@ namespace BL.Commands
             watch.Stop();
             Console.WriteLine($"Max temperature from list of cities is: {maxTemperature}, passed {watch.ElapsedMilliseconds} milliseconds");
             Console.WriteLine($"Successful requests: {success}, Failed requests: {failed}");
-            return Unit.Value;
+            //return Unit.Value;
+            return maxTemperature;
         }
     }
 }

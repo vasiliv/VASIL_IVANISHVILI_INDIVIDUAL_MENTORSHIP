@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTest", "Test\Int
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{5D611533-C42E-4692-9002-0B0A51044583}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackgroundJob", "BackgroundJob\BackgroundJob.csproj", "{A1B25CC2-5396-4DD0-AFBC-5E9F4F17A949}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackgroundJob", "BackgroundJob\BackgroundJob.csproj", "{A1B25CC2-5396-4DD0-AFBC-5E9F4F17A949}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
