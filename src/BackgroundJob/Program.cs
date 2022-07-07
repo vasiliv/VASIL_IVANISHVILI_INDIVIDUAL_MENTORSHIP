@@ -19,7 +19,7 @@ using BL;
 namespace BackgroundJob
 {
     public class Program
-    {
+    {        
         //for using configuration in whole class
         public static IConfiguration ConfFromAppsettings { get; set; }
         
@@ -45,9 +45,18 @@ namespace BackgroundJob
                      builder.Configure(app =>
                      {
                          app.UseRouting();
+                         var cities = ConfFromAppsettings.GetValue<string>("Cities");
                          //add recurring job
-                         RecurringJob.AddOrUpdate<BL.WeatherForecast>("Job Id",
-                            x => x.SplitStringToCityArray(ConfFromAppsettings.GetValue<string>("Cities")), Cron.Minutely);
+                         if (cities.Contains(','))
+                         {
+                             RecurringJob.AddOrUpdate<BL.WeatherForecast>("Job Id",
+                            x => x.Combination(cities), Cron.Minutely);
+                         }
+                         else
+                         {
+                             RecurringJob.AddOrUpdate<BL.WeatherForecast>("Job Id",
+                            x => x.FillWeatherList(cities), Cron.Minutely);
+                         }                     
                          //add hangfire dashboard
                          app.UseHangfireDashboard();
                          app.UseEndpoints(endpoints =>
@@ -61,7 +70,7 @@ namespace BackgroundJob
                     //because of missing this line could not reach Connection string from appsettings.json
                     IConfiguration configuration = hostContext.Configuration;
                     ConfFromAppsettings = configuration;
-                    //adding hangfire server           
+                    //adding hangfire server                    
                     services.AddHangfire(x =>
                     {
                         x.UseSqlServerStorage(configuration.GetConnectionString("DefaultConnection"));

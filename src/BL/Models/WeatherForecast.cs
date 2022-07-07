@@ -15,14 +15,14 @@ using System.Threading.Tasks;
 namespace BL
 {
     public class WeatherForecast
-    {
+    {        
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
         public WeatherForecast(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _configuration = configuration;
-        }
+            _configuration = configuration;            
+        }        
         //overloaded version of GetTemperature(string city, CancellationToken token)
         public Task<double?> GetTemperature(string city) => GetTemperature(city, CancellationToken.None);
         public async Task<double?> GetTemperature(string city, CancellationToken token)
@@ -102,6 +102,27 @@ namespace BL
         public IEnumerable<string> SplitStringToCityArray(string cities)
         {
             return cities.Split(',').ToList<string>();
+        }
+        
+        List<Weather> WeatherObj = new List<Weather>() { };
+        public async Task FillWeatherList(string city)
+        {
+            var weather = new Weather()
+            {
+                City = city,
+                Temperature = await GetTemperature(city),
+                Latitude = GetCoordinateByCity(city).Result.Latitude,
+                Longitude = GetCoordinateByCity(city).Result.Longitude,
+            };
+            WeatherObj.Add(weather);
+        }        
+        public async Task Combination(string cities)
+        {
+            var cityList = SplitStringToCityArray(cities);
+            foreach (var item in cityList)
+            {
+                await FillWeatherList(item);                
+            }
         }
     }   
 }
