@@ -1,4 +1,5 @@
 ﻿using BL.Models;
+using DAL.Models;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

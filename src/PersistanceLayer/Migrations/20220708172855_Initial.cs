@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DAL.Migrations
+#nullable disable
+
+namespace PersistanceLayer.Migrations
 {
     public partial class Initial : Migration
     {

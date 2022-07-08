@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Builder;
 using System.Configuration;
 using Hangfire.Storage;
 using BL;
-using DAL;
+using PersistanceLayer;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackgroundJob
@@ -78,7 +78,7 @@ namespace BackgroundJob
                         x.UseSqlServerStorage(configuration.GetConnectionString("DefaultConnection"));
                     });
                     //add DbContext
-                    services.AddDbContext<WeatherDbContext>(options =>
+                    services.AddDbContext<WeatherContext>(options =>
                         options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
                     services.AddHangfireServer();                    
                     services.AddHostedService<Worker>();
