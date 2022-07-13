@@ -17,8 +17,6 @@ namespace WebAPI.Controllers
                 ILogger<WeatherForecastController> logger)
         {
             _mediator = mediator;
-            _recurringJobManager = recurringJobManager;
-            _logger = logger;
         }
         [HttpGet("currentWeather/{city}")]
         public async Task<double?> GetCurrentWeather([FromRoute] string city)
@@ -36,14 +34,6 @@ namespace WebAPI.Controllers
                     City = city,
                     NumDays = numDays
             });
-        }
-        [HttpGet("/ReccuringJob")]
-        public ActionResult CreateReccuringJob()
-        {
-            _logger.LogInformation("Weather forecast executing");
-            RecurringJob.AddOrUpdate<BL.WeatherForecast>("Job Id", 
-                x => x.SplitStringToCityArray("Minsk, Brest, Homel, Moscow"), Cron.Minutely);        
-            return Ok();
         }
     };    
 }
