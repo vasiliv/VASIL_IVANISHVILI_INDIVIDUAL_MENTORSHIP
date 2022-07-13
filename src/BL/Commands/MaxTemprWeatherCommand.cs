@@ -1,5 +1,4 @@
-﻿using BL.Models;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -10,13 +9,12 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace BL.Commands
-{
-    //public class MaxTemprWeatherCommand: IRequest<Unit>
+{    
     public class MaxTemprWeatherCommand : IRequest<double?>
     {
-        public string Cities { get; set; }
-    }
-    //public class MaxTemprWeatherCommandHandler : IRequestHandler<MaxTemprWeatherCommand, Unit>
+        //public string Cities { get; set; }
+        public IEnumerable <string> Cities { get; set; }
+    }    
     public class MaxTemprWeatherCommandHandler : IRequestHandler<MaxTemprWeatherCommand, double?>
     {
         private readonly WeatherForecast _weatherForecast;
@@ -34,11 +32,12 @@ namespace BL.Commands
             var watch = new Stopwatch();
             watch.Start();
             
-            IEnumerable<string> cityArray = _weatherForecast.SplitStringToCityArray(request.Cities);
+            //IEnumerable<string> cityArray = _weatherForecast.SplitStringToCityArray(request.Cities);
 
             List<Task<(string, double?)>> list = new();
 
-            foreach (var city in cityArray)
+            //foreach (var city in cityArray)
+            foreach (var city in request.Cities)
             {
                 try
                 {
@@ -50,8 +49,8 @@ namespace BL.Commands
                 }
             }
             success = list.Count;
-            failed = cityArray.Count() - success;
-
+            //failed = cityArray.Count() - success;
+            failed = request.Cities.Count() - success;
             double? maxTemperature = list.Select(t => t.Result)
                 .Select(t => t.Item2).Max();            
 

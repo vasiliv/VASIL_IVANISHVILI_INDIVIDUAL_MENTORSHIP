@@ -58,10 +58,13 @@ namespace ConsoleApp
                 case 3:
                     Console.WriteLine("Please enter list of cities:");
                     string cities = Console.ReadLine();
+                    //because MaxTemprWeatherCommand receives IEnumerable <string> Cities
+                    //insted of comma separated string
+                    var citiesSplitted = cities.Split(',').ToList<string>();
 
                     await _mediator.Send(new MaxTemprWeatherCommand
                     {
-                        Cities = cities
+                        Cities = citiesSplitted
                     });
                     break;
                 default:

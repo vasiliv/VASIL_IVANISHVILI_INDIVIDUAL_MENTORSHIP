@@ -1,5 +1,4 @@
-﻿using BL.Models;
-using DAL.Models;
+﻿using DAL.Models;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -110,10 +109,11 @@ namespace BL
         {
             var weather = new Weather()
             {
-                City = city,
+                City = city,                
                 Temperature = await GetTemperature(city),
-                Latitude = GetCoordinateByCity(city).Result.Latitude,
-                Longitude = GetCoordinateByCity(city).Result.Longitude,
+                //Latitude =  await GetCoordinateByCity(city).Result.Latitude,
+                //Longitude = await GetCoordinateByCity(city).Result.Longitude,
+                Coordinate = await GetCoordinateByCity(city)
             };
             WeatherObj.Add(weather);
         }        

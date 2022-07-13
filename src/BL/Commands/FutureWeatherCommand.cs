@@ -1,4 +1,4 @@
-﻿using BL.Models;
+﻿using DAL.Models;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;
