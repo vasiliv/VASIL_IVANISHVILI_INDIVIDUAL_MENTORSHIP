@@ -15,6 +15,8 @@ namespace BackgroundJob
 {
     public class Program
     {
+        public static IConfigurationRoot ConfFromAppsettings { get; private set; }
+
         public static void Main(string[] args)
         {
             //Load Serilog configuration from appsettings.json
