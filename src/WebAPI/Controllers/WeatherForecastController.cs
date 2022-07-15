@@ -1,4 +1,5 @@
 using BL.Commands;
+using Hangfire;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +10,11 @@ namespace WebAPI.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public WeatherForecastController(IMediator mediator)
+        private readonly IRecurringJobManager _recurringJobManager;
+        private readonly ILogger<WeatherForecastController> _logger;
+        public WeatherForecastController(IMediator mediator,
+                IRecurringJobManager recurringJobManager,
+                ILogger<WeatherForecastController> logger)
         {
             _mediator = mediator;
         }

@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTest", "Test\Int
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{5D611533-C42E-4692-9002-0B0A51044583}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackgroundJob", "BackgroundJob\BackgroundJob.csproj", "{A1B25CC2-5396-4DD0-AFBC-5E9F4F17A949}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackgroundJob", "BackgroundJob\BackgroundJob.csproj", "{A1B25CC2-5396-4DD0-AFBC-5E9F4F17A949}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersistanceLayer", "PersistanceLayer\PersistanceLayer.csproj", "{9CA584A4-52FE-4F55-9DC0-BF3D1F316511}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{A1B25CC2-5396-4DD0-AFBC-5E9F4F17A949}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B25CC2-5396-4DD0-AFBC-5E9F4F17A949}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B25CC2-5396-4DD0-AFBC-5E9F4F17A949}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CA584A4-52FE-4F55-9DC0-BF3D1F316511}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CA584A4-52FE-4F55-9DC0-BF3D1F316511}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CA584A4-52FE-4F55-9DC0-BF3D1F316511}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CA584A4-52FE-4F55-9DC0-BF3D1F316511}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

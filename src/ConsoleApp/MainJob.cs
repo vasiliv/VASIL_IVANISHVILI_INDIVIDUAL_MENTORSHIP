@@ -56,7 +56,16 @@ namespace ConsoleApp
                     });                    
                     break;
                 case 3:
-                    await _mediator.Send(new MaxTemprWeatherCommand());
+                    Console.WriteLine("Please enter list of cities:");
+                    string cities = Console.ReadLine();
+                    //because MaxTemprWeatherCommand receives IEnumerable <string> Cities
+                    //insted of comma separated string
+                    var citiesSplitted = cities.Split(',').ToList<string>();
+
+                    await _mediator.Send(new MaxTemprWeatherCommand
+                    {
+                        Cities = citiesSplitted
+                    });
                     break;
                 default:
                     Console.WriteLine("Please enter correct number");
