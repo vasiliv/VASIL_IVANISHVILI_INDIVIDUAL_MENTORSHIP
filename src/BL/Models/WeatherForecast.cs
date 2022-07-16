@@ -110,10 +110,7 @@ namespace BL
             var weather = new Weather()
             {
                 City = city,                
-                Temperature = await GetTemperature(city),
-                //Latitude =  await GetCoordinateByCity(city).Result.Latitude,
-                //Longitude = await GetCoordinateByCity(city).Result.Longitude,
-                Coordinate = await GetCoordinateByCity(city)
+                Temperature = await GetTemperature(city),                
             };
             WeatherObj.Add(weather);
         }        
